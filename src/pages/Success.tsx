@@ -20,7 +20,7 @@ export const Success = () => {
             address: ''
         }
         dispacth(removeUser(userTemp));
-        history.push('/');
+        history.replace('/');
     }
 
     return (
