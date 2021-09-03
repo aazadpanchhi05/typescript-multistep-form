@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Button, Form } from 'react-bootstrap'
+import { Alert, Button, Form } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux';
 import { addUser } from '../store/Actions/userAction';
 import { RootStore } from '../store/store';
@@ -15,24 +15,31 @@ export const View1 = (prop: Props) => {
     const user = useSelector((state: RootStore) => state.user);
 
     const [name, setName] = useState(user.name);
+    const [error, setError] = useState('');
+
 
     const dispatch = useDispatch();
 
     const submitHandler = () => {
-        const userTemp = {
-            name: name,
-            email: '',
-            phoneNo: 0,
-            address: ''
+        if (name === '') {
+            setError('Name is required!')
         }
-        dispatch(addUser(userTemp));
-        prop.nextPage();
+        else {
+            const userTemp = {
+                name: name,
+                email: '',
+                phoneNo: 0,
+                address: ''
+            }
+            dispatch(addUser(userTemp));
+            prop.nextPage();
+        }
     }
 
     return (
         <>
             <h2> Signup Step 1 </h2>
-            {/* {error && <Alert variant='danger'>{error}</Alert> } */}
+            {error && <Alert variant='danger'>{error}</Alert> }
             <Form>
                 <Form.Group>
                     <Form.Label>Enter Full Name</Form.Label>
